@@ -1,0 +1,129 @@
+<launch>
+	<!-- Horizon -->
+	<arg name="horizonDistance" 			default="7"  />
+
+	<!-- Plan Distance -->
+	<arg name="maxLocalPlanDistance" 		default="10" />	
+
+	<!-- Path Density -->
+	<arg name="pathDensity" 			default="0.02" />
+
+	<!-- Horizontal Density -->
+	<arg name="rollOutDensity" 			default="0.3" /> <!-- horizontal density -->
+
+	<!-- Rollouts Number -->
+	<arg name="rollOutsNumber" 			default="4"    />
+
+	<!-- MAx Velocity -->
+	<arg name="maxVelocity" 				default="0.3" />
+
+	<!-- Acceleration -->
+	<arg name="maxAcceleration" 			default="0.3" />
+
+	<!-- Deceleration -->
+	<arg name="maxDeceleration" 			default="-0.3" />
+
+	<!-- Enable Following -->
+	<arg name="enableFollowing" 			default="false" />	
+
+	<!-- Enable Avoidance -->
+	<arg name="enableSwerving" 			default="false"  /> <!-- Enable avoidance -->
+
+	<!-- Follow Distance -->
+	<arg name="minFollowingDistance" 		default="30.0"  /> <!-- should be bigger than Distance to follow -->	
+
+	<!-- Avoiding Distance -->
+	<arg name="minDistanceToAvoid" 		default="0.5" /> <!-- should be smaller than minFollowingDistance and larger than maxDistanceToAvoid -->
+
+	<!-- Avoidance Limit -->
+	<arg name="maxDistanceToAvoid" 		default="0.5"  /> <!-- should be smaller than minDistanceToAvoid -->
+
+	<!-- Enable Stop Sign Stop -->
+	<arg name="enableStopSignBehavior" 	default="false" />	
+
+	<!-- Enable Traffic Light -->
+	<arg name="enableTrafficLightBehavior" default="false" />
+
+	<!-- Enable Lane Change -->
+	<arg name="enableLaneChange" 			default="false" />	
+
+	<!-- Lateral Safety -->
+	<arg name="horizontalSafetyDistance"	default="0.05"  />
+
+	<!-- Longitudinal Safety -->
+	<arg name="verticalSafetyDistance"	default="0.05"  />
+
+	<!-- Velocity Source -->
+	<arg name="velocitySource"			default="1" /> <!-- read velocities from (0- Odometry, 1- autoware current_velocities, 2- car_info) "" -->		
+
+	<!-- Parameters not in app -->
+	<arg name="mapSource" 				default="0" /> <!-- Autoware=0, Vector Map Folder=1, kml=2 -->
+	<arg name="mapFileName" 			default="" />
+	<arg name="minVelocity" 				default="0.1" />	
+	<arg name="speedProfileFactor"		default="1.2"  />
+	<arg name="smoothingDataWeight"			default="0.45"  />
+	<arg name="smoothingSmoothWeight"		default="0.4"  />	
+	<arg name="width" 					default="0.25"  /> <!-- Vehicle Size -->
+	<arg name="length" 					default="0.5"  /> <!-- Vehicle Size -->
+	<arg name="wheelBaseLength" 			default="0.1"  /> <!-- Vehicle Size -->
+	<arg name="turningRadius"				default="5.2"  />
+	<arg name="maxSteerAngle" 			default="0.45" />
+	<arg name="steeringDelay" 			default="1.2" />
+	<arg name="minPursuiteDistance" 	default="3.0"  />
+	<arg name="additionalBrakingDistance" default="5.0"  />
+	<arg name="giveUpDistance" 			default="-4.0"  />
+
+
+	<node pkg="op_local_planner" type="op_common_params" name="op_common_params" output="screen">
+	
+	<!-- Common Parameters -->
+	
+	<param name="mapSource" 				value="$(arg mapSource)" /> <!-- Autoware=0, Vector Map Folder=1, kml=2 -->
+	<param name="mapFileName" 				value="$(arg mapFileName)" />
+		
+	<param name="pathDensity" 			    value="$(arg pathDensity)" />
+	<param name="rollOutDensity" 			value="$(arg rollOutDensity)" />
+	<param name="rollOutsNumber" 			value="$(arg rollOutsNumber)"    />
+	
+	<param name="maxVelocity" 				value="$(arg maxVelocity)" />
+	<param name="minVelocity" 				value="$(arg minVelocity)" />	
+	<param name="maxLocalPlanDistance" 		value="$(arg maxLocalPlanDistance)" />	
+	<param name="horizonDistance" 			value="$(arg horizonDistance)" />
+	
+	<param name="minFollowingDistance" 		value="$(arg minFollowingDistance)"  /> <!-- should be bigger than Distance to follow -->	
+	<param name="minDistanceToAvoid" 		value="$(arg minDistanceToAvoid)" /> <!-- should be smaller than minFollowingDistance and larger than maxDistanceToAvoid -->
+	<param name="maxDistanceToAvoid" 		value="$(arg maxDistanceToAvoid)"  /> <!-- should be smaller than minDistanceToAvoid -->
+	<param name="speedProfileFactor"		value="$(arg speedProfileFactor)"  />
+	
+	<param name="smoothingDataWeight"		value="$(arg smoothingDataWeight)"  />
+	<param name="smoothingSmoothWeight"		value="$(arg smoothingSmoothWeight)"  />
+	
+	<param name="horizontalSafetyDistance"	value="$(arg horizontalSafetyDistance)"  />
+	<param name="verticalSafetyDistance"	value="$(arg verticalSafetyDistance)"  />
+	
+	<param name="enableSwerving" 			value="$(arg enableSwerving)"  />
+	<param name="enableFollowing" 			value="$(arg enableFollowing)" />	
+	<param name="enableTrafficLightBehavior" value="$(arg enableTrafficLightBehavior)" />
+	<param name="enableStopSignBehavior" 	value="$(arg enableStopSignBehavior)" />	
+	<param name="enableLaneChange" 			value="$(arg enableLaneChange)" />	
+	
+	<param name="width" 					value="$(arg width)"  />
+	<param name="length" 					value="$(arg length)"  />
+	<param name="wheelBaseLength" 			value="$(arg wheelBaseLength)"  />
+	<param name="turningRadius"				value="$(arg turningRadius)"  />
+	<param name="maxSteerAngle" 			value="$(arg maxSteerAngle)" />
+
+	<param name="steeringDelay" 			value="$(arg steeringDelay)" />
+	<param name="minPursuiteDistance" 		value="$(arg minPursuiteDistance)"  />	
+	<param name="additionalBrakingDistance" value="$(arg additionalBrakingDistance)"  />
+	
+	<param name="giveUpDistance" value="$(arg giveUpDistance)"  />
+	
+	<param name="maxAcceleration" 			value="$(arg maxAcceleration)" />
+	<param name="maxDeceleration" 			value="$(arg maxDeceleration)" />
+			
+	<param name="velocitySource"			value="$(arg velocitySource)" /> <!-- read velocities from (0- Odometry, 1- autoware current_velocities, 2- car_info) "" -->		
+			
+	</node>				
+			
+</launch>

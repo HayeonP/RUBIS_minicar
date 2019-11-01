@@ -1,0 +1,12 @@
+<launch>
+    <arg name="scripts_dir" default="$(find minicar_autorunner)/scripts/wf_sim_autorunner/step1"/>
+
+	<include file="$(arg scripts_dir)/lidar_base_tf.launch"/>
+	<include file="$(arg scripts_dir)/map_tf.launch"/>
+	<!--<node pkg="" type="" name="" args=""/>-->
+	<include file="$(arg scripts_dir)/map_loader.launch" />
+	<include file="$(arg scripts_dir)/voxel_grid_filter.launch" />
+	<include file="$(arg scripts_dir)/ndt_matching.launch" />		
+	<include file="$(arg scripts_dir)/vel_pose_connect.launch" />
+    <include file="$(arg scripts_dir)/wf_simulator.launch" />
+</launch>

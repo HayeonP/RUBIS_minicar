@@ -1,0 +1,5 @@
+<launch>
+    <arg name="scripts_dir" default="$(find minicar_autorunner)/scripts/wf_sim_autorunner/step2"/>
+
+	<include file="$(arg scripts_dir)/global_planner.launch"/>
+</launch>

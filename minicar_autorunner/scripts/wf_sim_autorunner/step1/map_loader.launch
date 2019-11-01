@@ -1,0 +1,9 @@
+<launch>
+    <node pkg="map_file" type="vector_map_loader" name="vector_map_loader" args="
+	    /home/hypark/autoware_files/map/vector_map/191028_rubis_track/dtlane.csv
+		/home/hypark/autoware_files/map/vector_map/191028_rubis_track/idx.csv
+		/home/hypark/autoware_files/map/vector_map/191028_rubis_track/lane.csv
+		/home/hypark/autoware_files/map/vector_map/191028_rubis_track/node.csv
+		/home/hypark/autoware_files/map/vector_map/191028_rubis_track/point.csv"/>
+	<node pkg="map_file" type="points_map_loader" name="points_map_loader" args="noupdate /home/hypark/autoware_files/map/points_map/191028_rubis_track_origin.pcd"/>
+</launch>
