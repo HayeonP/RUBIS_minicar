@@ -1,0 +1,6 @@
+<launch>
+    <arg name="scripts_dir" default="$(find minicar_autorunner)/scripts/dual_lane_keeping_autorunner/step3"/>
+
+    <include file="$(arg scripts_dir)/op_common_params.launch" />
+    <include file="$(arg scripts_dir)/op_trajectory_generator.launch" />
+</launch>

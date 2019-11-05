@@ -1,0 +1,5 @@
+<launch>
+    <arg name="scripts_dir" default="$(find minicar_autorunner)/scripts/dual_lane_keeping_autorunner/step5"/>
+
+    <include file="$(arg scripts_dir)/op_behavior_selector.launch" />
+</launch>

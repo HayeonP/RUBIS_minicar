@@ -1,0 +1,33 @@
+<launch>
+	<!-- Waypoint : 0 / Dialog : 1 -->
+	<arg name="param_flag" default="0"/>	
+
+	<!-- Velocity -->
+	<arg name="const_velocity" default="0.3"/>	
+	<!-- Lookahead Distance -->
+	<arg name="const_lookahead_distance" default="4"/>
+
+	<!-- lookahead_ratio -->
+	<arg name="lookahead_distance_ratio" default="0.2"/>
+
+	<!-- minimum_lookahead_distance-->
+	<arg name="minimum_lookahead_distance" default="0.2"/>
+
+	<!-- Linear Interpolation -->
+	<arg name="is_linear_interpolation" default="True"/>
+
+	<!-- Publishes topic for steering robot -->
+	<arg name="publishes_for_steering_robot" default="False"/>
+
+	<!-- rosrun waypoint_follower pure_pursuit -->
+	<node pkg="waypoint_follower" type="pure_pursuit_param" name="pure_pursuit" >
+		<param name="is_linear_interpolation" value="$(arg is_linear_interpolation)"/>
+		<param name="publishes_for_steering_robot" value="$(arg publishes_for_steering_robot)"/>		
+		<param name="param_flag" value="$(arg param_flag)"/>
+		<param name="const_lookahead_distance" value="$(arg const_lookahead_distance)"/>
+		<param name="const_velocity" value="$(arg const_velocity)"/>
+		<param name="lookahead_distance_ratio" value="$(arg lookahead_distance_ratio)"/>
+		<param name="minimum_lookahead_distance" value="$(arg minimum_lookahead_distance)"/>
+	</node>
+
+</launch>
