@@ -6,6 +6,7 @@
 #if DEBUG_ZONE_ROS
 #include <ros/ros.h>
 #include <image_transport/image_transport.h>
+#include <lane_following/isFound.h>
 #endif
 
 #include <opencv2/core/cvstd.hpp>
@@ -81,13 +82,13 @@ public:
 	}
 	void SignalHandler(int signum) {
 #if DEBUG_ZONE_ROS
-		MotorPublisher(0, 0.5);
+		MotorPublisher(0, 0.5, false, false);
 #endif
 		EndThread();
 	}
 #if DEBUG_ZONE_ROS
 	void zedCallback(const sensor_msgs::ImageConstPtr& img);
-	void MotorPublisher(double speed, double angle);
+	void MotorPublisher(double speed, double angle, bool isLeftFound, bool isRightFound);
 #endif
 
 private:
@@ -146,6 +147,7 @@ private:
 	ros::Publisher speedPub;
 	ros::Publisher servoPub;
 	ros::Publisher durationPub;
+	ros::Publisher foundPub;
 
 	image_transport::ImageTransport it;
 	image_transport::Subscriber zedSub;

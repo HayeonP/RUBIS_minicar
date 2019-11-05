@@ -56,11 +56,20 @@ ThreadManager<WARP, COLOR_GRAD_THRESH, FIND_LANES>::ThreadManager(tm_args *args)
 	threadManager = this;
 
 #if DEBUG_ZONE_ROS
-	speedPub = nh.advertise < std_msgs::Float64 > ("/commands/motor/speed", 10);
-	servoPub = nh.advertise < std_msgs::Float64	> ("/commands/servo/position", 10);
-	durationPub = nh.advertise < std_msgs::Int64 > ("/duration", 10);
+	std::string speed_topic_str;
+	std::string steer_topic_str;
+	std::string image_topic_str;
+	
+	nh.param("/lane_following/speed_topic_str", speed_topic_str, std::string("/commands/motor/speed"));
+	nh.param("/lane_following/steer_topic_str", steer_topic_str, std::string("/commands/servo/position"));
+	nh.param("/lane_following/image_topic_str", image_topic_str, std::string("/zed/zed_node/left/image_rect_color"));
 
-	zedSub = it.subscribe("/zed/zed_node/left/image_rect_color", 1,
+	speedPub = nh.advertise < std_msgs::Float64 > (speed_topic_str.c_str(), 10);
+	servoPub = nh.advertise < std_msgs::Float64	> (steer_topic_str.c_str(), 10);
+	durationPub = nh.advertise < std_msgs::Int64 > ("/duration", 10);
+	foundPub = nh.advertise < lane_following::isFound >("/is_found", 1);
+
+	zedSub = it.subscribe(image_topic_str.c_str(), 1,
 			&ThreadManager<WARP, COLOR_GRAD_THRESH, FIND_LANES>::zedCallback, this);
 #endif
 }
@@ -401,14 +410,17 @@ void ThreadManager<WARP, COLOR_GRAD_THRESH, FIND_LANES>::CompleteTask(
 								temp_findLanes->getFrameIndex(),
 								frameDurations.size(), frameDuration,
 								procDurations.size(), procDuration);
-
+						
+						bool isLeftFound, isRightFound;
 						if (temp_findLanes->isDetected()) {
 							lastAngle = temp_findLanes->getSteeringAngle();
 							laneHistory = temp_findLanes->getLaneHistory();
-							ShowFrame(temp_findLanes->getOutImg());
+							ShowFrame(temp_findLanes->getOutImg());							
 						}
-#if DEBUG_ZONE_ROS
-						MotorPublisher(args.speed, lastAngle);
+						isLeftFound = temp_findLanes->leftLine.found;
+						isRightFound = temp_findLanes->rightLine.found;
+#if DEBUG_ZONE_ROS		
+						MotorPublisher(args.speed, lastAngle, isLeftFound, isRightFound);
 #endif
 						// Stop at last frame
 						if ((args.maxFrameCnt != -1)
@@ -956,15 +968,20 @@ void ThreadManager<WARP, COLOR_GRAD_THRESH, FIND_LANES>::zedCallback(
 
 template<typename WARP, typename COLOR_GRAD_THRESH, typename FIND_LANES>
 void ThreadManager<WARP, COLOR_GRAD_THRESH, FIND_LANES>::MotorPublisher(
-		double speed, double angle) {
+		double speed, double angle, bool isLeftFound, bool isRightFound) {
 	std_msgs::Float64::Ptr speed_msg(new std_msgs::Float64);
 	std_msgs::Float64::Ptr servo_msg(new std_msgs::Float64);
 	std_msgs::Int64::Ptr duration_msg(new std_msgs::Int64);
+	lane_following::isFound::Ptr is_found_msg;
 	speed_msg->data = speed;
 	servo_msg->data = angle;
 	duration_msg->data = frameDuration;
 	speedPub.publish(speed_msg);
 	servoPub.publish(servo_msg);
 	durationPub.publish(duration_msg);
+	is_found_msg->left = isLeftFound;
+	is_found_msg->right = isRightFound;
+	foundPub.publish(is_found_msg);
+	
 }
 #endif

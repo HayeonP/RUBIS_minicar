@@ -111,6 +111,7 @@ private:
 			windowHeight = 0;
 		}
 	} hyperparams;
+public:
 	struct LaneCurrent: public Line {
 		std::vector<cv::Point> pts;
 		std::vector<cv::Point> fittedPts;
@@ -122,6 +123,7 @@ private:
 			Line::clear();
 		}
 	} leftLine, rightLine;
+private:
 	void FindNonZero();
 	void PrepOutImg();
 	void MakeOutImg();

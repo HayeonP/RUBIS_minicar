@@ -3,7 +3,7 @@
 int main
 (int argc, char* argv[])
 {
-	ros::init(argc, argv, "control_module_origin");
+	ros::init(argc, argv, "control_module");
 	
 	ControlModule app;
 	app.Run();

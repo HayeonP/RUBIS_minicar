@@ -11,7 +11,17 @@
     vesc_driver/port: /dev/vesc
     keyboard: false
   </rosparam>
+
+  <rosparam>
+    from_lane_following: true
+    from_autoware: false
+    lane_following_speed_str: /lane_following/speed
+    lane_following_steer_str: /lane_following/steer
+    twist_str: /twist_cmd
+    end_threshold: 0.5
+  </rosparam>
+
   <node pkg="vesc_driver" type="vesc_driver_node" name="vesc_driver" />
-  <node pkg="control_module"
- type="control_module_origin" name="control_module" output="screen"/>
+  <node pkg="control_module" type="control_module" name="control_module" output="screen">
+  </node>
 </launch>

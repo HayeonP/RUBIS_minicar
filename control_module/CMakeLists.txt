@@ -12,6 +12,8 @@ find_package(catkin REQUIRED COMPONENTS
   tf
   std_msgs
   geometry_msgs
+  visualization_msgs
+  lane_following
 )
 
 ## System dependencies are found with CMake's conventions
@@ -33,7 +35,7 @@ find_package(catkin REQUIRED COMPONENTS
 ##   your messages/services/actions (e.g. std_msgs, actionlib_msgs, ...).
 ## * In the file package.xml:
 ##   * add a build_depend tag for "message_generation"
-##   * add a build_depend and a exec_depend tag for each package in MSG_DEP_SET
+##   * add a build_depend and a exec_depend tag forg each package in MSG_DEP_SET
 ##   * If MSG_DEP_SET isn't empty the following dependency has been pulled in
 ##     but can be declared for certainty nonetheless:
 ##     * add a exec_depend tag for "message_runtime"
@@ -50,8 +52,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
 # add_message_files(
 #   FILES
-#   Message1.msg
-#   Message2.msg
+#   isFound.msg
 # )
 
 ## Generate services in the 'srv' folder
@@ -69,11 +70,13 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-generate_messages(
-	DEPENDENCIES
-	std_msgs  # Or other packages containing msgs
-	geometry_msgs
-)
+# generate_messages(
+# 	DEPENDENCIES
+# 	std_msgs  # Or other packages containing msgs
+# 	geometry_msgs
+#   visualization_msgs
+#   lane_following
+# )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -107,7 +110,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES contorl_module
-  CATKIN_DEPENDS roscpp tf geometry_msgs std_msgs
+  CATKIN_DEPENDS roscpp tf geometry_msgs std_msgs visualization_msgs lane_following
 #  DEPENDS system_lib
 )
 
@@ -136,7 +139,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(twist_converter src/twist_converter.cpp)
+
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -149,29 +152,24 @@ add_executable(twist_converter src/twist_converter.cpp)
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
+
+add_executable(twist_converter src/twist_converter.cpp)
 target_link_libraries(twist_converter
    ${catkin_LIBRARIES}
 )
 
-add_executable(control_module_origin src/control_module_origin/control_module_origin_node.cpp
+
+add_executable(control_module
 				include/control_module/control_module.h
-				src/control_module_origin/control_module_origin.cpp)
-
-target_link_libraries(control_module_origin
+        src/control_module/control_module_node.cpp
+				src/control_module/control_module.cpp)
+target_link_libraries(control_module
    ${catkin_LIBRARIES}
 )
+# add_dependencies(control_module ${catkin_EXPORTED_TARGETS} ${${my_package}_EXPORTED_TARGETS})
+add_dependencies(control_module ${${my_package}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_gencfg)
 
-target_link_libraries(twist_converter
-   ${catkin_LIBRARIES}
-)
 
-add_executable(filtering_zero_control_module src/filtering_zero_control_module/filtering_zero_control_module_node.cpp
-				include/control_module/control_module.h
-				src/filtering_zero_control_module/filtering_zero_control_module.cpp)
-
-target_link_libraries(filtering_zero_control_module
-   ${catkin_LIBRARIES}
-)
 
 #############
 ## Install ##
