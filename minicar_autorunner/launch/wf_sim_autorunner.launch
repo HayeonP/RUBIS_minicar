@@ -1,4 +1,4 @@
 <launch>
-    <rosparam command="load" file="/home/hypark/minicar_ws/src/minicar_autorunner/cfg/wf_sim_autorunner.yaml" />
+    <rosparam command="load" file="/home/nvidia/minicar_ws/src/minicar_autorunner/cfg/wf_sim_autorunner.yaml" />
     <node pkg="minicar_autorunner" type="wf_sim_autorunner" name="wf_sim_autorunner" output="screen" />
 </launch>

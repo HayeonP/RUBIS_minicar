@@ -4,9 +4,9 @@
 	<arg name="enableHeadingSmoothing" 	default="false" />
 
 	<!-- Tip Margin -->
-	<arg name="samplingTipMargin" 		default="0.2"  /> 
+	<arg name="samplingTipMargin" 		default="0.6"  /> 
 	<!-- Roll In Margin -->
-	<arg name="samplingOutMargin" 		default="0.2" /> 
+	<arg name="samplingOutMargin" 		default="0.4" /> 
 	
 	<node pkg="op_local_planner" type="op_trajectory_generator" name="op_trajectory_generator">
 	

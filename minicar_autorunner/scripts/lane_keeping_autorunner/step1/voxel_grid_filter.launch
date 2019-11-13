@@ -1,7 +1,7 @@
 <launch>
   <arg name="sync" default="false" />
-  <arg name="node_name" default="voxel_grid_filter" />
-  <arg name="node_type" default="voxel_grid_filter" />
+  <arg name="node_name" default="voxel_grid_filter_param" />
+  <arg name="node_type" default="voxel_grid_filter_param" />
   <arg name="points_topic" default="points_raw" />
   <arg name="output_log" default="false" />
   <!-- Voxel Leaf Size -->

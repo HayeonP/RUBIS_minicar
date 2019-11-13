@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(minicar_autorunner)
 
-set(ROS_AUTORUNNER_LIB "/home/hypark/minicar_ws/src/ros_autorunner_lib")
+set(ROS_AUTORUNNER_LIB "/home/nvidia/minicar_ws/src/ros_autorunner_lib")
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)

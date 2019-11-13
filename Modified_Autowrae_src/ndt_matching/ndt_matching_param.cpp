@@ -263,6 +263,7 @@ static pose convertPoseIntoRelativeCoordinate(const pose &target_pose, const pos
 
 static void map_callback(const sensor_msgs::PointCloud2::ConstPtr& input)
 {
+  ROS_WARN("MAP_CB_START");
   // if (map_loaded == 0)
   if (points_map_num != input->width)
   {
@@ -372,6 +373,7 @@ static void map_callback(const sensor_msgs::PointCloud2::ConstPtr& input)
 #endif
     map_loaded = 1;
   }
+  ROS_WARN("MAP_CB_END");
 }
 
 static void gnss_callback(const geometry_msgs::PoseStamped::ConstPtr& input)
@@ -443,6 +445,7 @@ static void gnss_callback(const geometry_msgs::PoseStamped::ConstPtr& input)
 
 static void initialpose_callback(const geometry_msgs::PoseWithCovarianceStamped::ConstPtr& input)
 {
+  ROS_WARN("initpose_CB_START");
   tf::TransformListener listener;
   tf::StampedTransform transform;
   try
@@ -536,6 +539,7 @@ static void initialpose_callback(const geometry_msgs::PoseWithCovarianceStamped:
   offset_imu_odom_yaw = 0.0;
 
   init_pos_set = 1;
+  ROS_WARN("initpose_CB_END");
 }
 
 static void imu_odom_calc(ros::Time current_time)
@@ -1581,37 +1585,37 @@ int main(int argc, char** argv)
   private_nh.getParam("imu_upside_down", _imu_upside_down);
   private_nh.getParam("imu_topic", _imu_topic);
 
-  if (nh.getParam("localizer", _localizer) == false)
+  if (nh.getParam("/ndt_matching/localizer", _localizer) == false)
   {
     std::cout << "localizer is not set." << std::endl;
     return 1;
   }
-  if (nh.getParam("tf_x", _tf_x) == false)
+  if (nh.getParam("/ndt_matching/tf_x", _tf_x) == false)
   {
     std::cout << "tf_x is not set." << std::endl;
     return 1;
   }
-  if (nh.getParam("tf_y", _tf_y) == false)
+  if (nh.getParam("/ndt_matching/tf_y", _tf_y) == false)
   {
     std::cout << "tf_y is not set." << std::endl;
     return 1;
   }
-  if (nh.getParam("tf_z", _tf_z) == false)
+  if (nh.getParam("/ndt_matching/tf_z", _tf_z) == false)
   {
     std::cout << "tf_z is not set." << std::endl;
     return 1;
   }
-  if (nh.getParam("tf_roll", _tf_roll) == false)
+  if (nh.getParam("/ndt_matching/tf_roll", _tf_roll) == false)
   {
     std::cout << "tf_roll is not set." << std::endl;
     return 1;
   }
-  if (nh.getParam("tf_pitch", _tf_pitch) == false)
+  if (nh.getParam("/ndt_matching/tf_pitch", _tf_pitch) == false)
   {
     std::cout << "tf_pitch is not set." << std::endl;
     return 1;
   }
-  if (nh.getParam("tf_yaw", _tf_yaw) == false)
+  if (nh.getParam("/ndt_matching/tf_yaw", _tf_yaw) == false)
   {
     std::cout << "tf_yaw is not set." << std::endl;
     return 1;
@@ -1694,9 +1698,11 @@ int main(int argc, char** argv)
 
   pthread_t thread;
   pthread_create(&thread, NULL, thread_func, NULL);
-
+  ROS_WARN("init_done");
   get_ndt_param(nh);
+  ROS_WARN("spin_START");
   ros::spin();
+  ROS_WARN("spin_END");
 
   return 0;
 }

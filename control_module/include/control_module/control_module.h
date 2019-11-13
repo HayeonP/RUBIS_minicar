@@ -5,7 +5,6 @@
 #include <geometry_msgs/PoseStamped.h>
 #include <geometry_msgs/Pose.h>
 #include <visualization_msgs/MarkerArray.h>
-#include <lane_following/isFound.h>
 #include <math.h>
 #include <mutex>
 
@@ -21,7 +20,6 @@ private:
 	ros::Subscriber lane_following_steer_sub_;
 	ros::Subscriber current_pose_sub_;
 	ros::Subscriber behavior_state_sub_;
-	ros::Subscriber is_found_sub_;
 	ros::Publisher vel_pub_;
 	ros::Publisher pos_pub_;
 	ros::Publisher state_pub_;
@@ -31,6 +29,7 @@ private:
 	double steering_angle_to_servo_offset_;
 	double wheelbase_;
 	
+	bool check_arrived_ = false;
 	bool from_lane_following_;
 	bool from_autoware_;	
 	bool is_arrived_to_goal_ = false;
@@ -46,7 +45,6 @@ private:
 	std::string current_state_;
 	geometry_msgs::Pose goal_pose_;
 	geometry_msgs::Pose current_pose_;
-	lane_following::isFound is_found_;
 
 private:
 	void init();
@@ -56,7 +54,6 @@ private:
 	void current_pose_cb(const geometry_msgs::PoseStamped& current_pose);
 	void goal_cb(const geometry_msgs::PoseStamped& msg);
 	void behavior_state_cb(const visualization_msgs::MarkerArray& msg);
-	void is_found_cb(const lane_following::isFound& msg);
 	void cal_vesc_value(double linear_vel, double angular_vel);
 	void pub_vesc_value();
 	bool is_arrived_to_goal();

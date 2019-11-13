@@ -48,10 +48,10 @@ int main(int argc, char** argv) {
 
 	tm_args args;
 	args.videoFile = "";
-	args.threadPoolSize = 8;
+	args.threadPoolSize = 4;
 	args.pipelineInstNum = 4;
 	args.maxFrameCnt = -1;
-	args.speed = 3000;
+	args.speed = 2000;
 	args.delay = 0;
 	args.bParallel = true;
 	args.bGpuAccel = false;

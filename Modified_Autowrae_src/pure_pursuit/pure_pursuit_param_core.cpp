@@ -80,10 +80,12 @@ void PurePursuitNode::run()
   ros::Rate loop_rate(LOOP_RATE_);
   bool param_check = false;
   
-  callbackFromConfig();
+//  callbackFromConfig();
   while (ros::ok())
   {
     ros::spinOnce();
+    callbackFromConfig();
+
     if (!is_pose_set_ || !is_waypoint_set_ || !is_velocity_set_ || !is_config_set_)
     {
       ROS_WARN("Necessary topics are not subscribed yet ... ");
@@ -204,7 +206,9 @@ void PurePursuitNode::callbackFromConfig()
   nh_.param("minimum_lookahead_distance", p_minimum_lookahead_distance);
   nh_.param("const_lookahead_distance", p_const_lookahead_distance);
 
-  param_flag_ = p_param_flag;
+
+  //param_flag_ = p_param_flag;
+  param_flag_ = 0;
   const_lookahead_distance_ = p_const_lookahead_distance;
   const_velocity_ = p_const_velocity;
   lookahead_distance_ratio_ = p_lookahead_distance_ratio;

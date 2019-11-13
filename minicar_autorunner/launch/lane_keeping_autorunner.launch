@@ -1,4 +1,4 @@
 <launch>
-    <rosparam command="load" file="/home/hypark/minicar_ws/src/minicar_autorunner/cfg/lane_keeping_autorunner.yaml" />
-    <node pkg="lane_keeping_autorunner" type="lane_keeping_autorunner" name="lane_keeping_autorunner" output="screen" />
+    <rosparam command="load" file="/home/nvidia/minicar_ws/src/minicar_autorunner/cfg/lane_keeping_autorunner.yaml" />
+    <node pkg="minicar_autorunner" type="lane_keeping_autorunner" name="lane_keeping_autorunner" output="screen" />
 </launch>

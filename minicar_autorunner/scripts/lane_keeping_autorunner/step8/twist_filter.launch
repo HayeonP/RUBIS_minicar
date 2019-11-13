@@ -1,7 +1,7 @@
 <!-- -->
 <launch>
 	<!-- lateral_accel_limit -->
-	<arg name="lateral_accel_limit" default="5.0" />
+	<arg name="lateral_accel_limit" default="1.5" />
 	<!-- lowpass_gain_linear_x -->
 	<arg name="lowpass_gain_linear_x" default="0.0" />
 	<!-- lowpass_gain_angular_z -->

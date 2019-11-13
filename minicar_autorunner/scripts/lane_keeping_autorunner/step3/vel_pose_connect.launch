@@ -2,9 +2,9 @@
   <!-- send table.xml to param server -->
   
   <!-- /current_pose -->
-  <arg name="topic_pose_stamped" default="" />
+  <arg name="topic_pose_stamped" default="/ndt_pose" />
   <!-- /current_velocity -->
-  <arg name="topic_twist_stamped" default="" />
+  <arg name="topic_twist_stamped" default="/estimate_twist" />
   <!-- Simulation Mode -->
   <arg name="sim_mode" default="false" />
 

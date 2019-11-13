@@ -13,11 +13,11 @@
   </rosparam>
 
   <rosparam>
-    from_lane_following: true
-    from_autoware: false
+    from_lane_following: false
+    from_autoware: true
     lane_following_speed_str: /lane_following/speed
     lane_following_steer_str: /lane_following/steer
-    twist_str: /twist_cmd
+    twist_str: /twist_raw
     end_threshold: 0.5
   </rosparam>
 

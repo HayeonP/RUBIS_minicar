@@ -7,8 +7,9 @@
 #include <visualization_msgs/MarkerArray.h>
 #include <geometry_msgs/TwistStamped.h>
 #include <autoware_msgs/NDTStat.h>
+#include <sensor_msgs/PointCloud2.h>
 
-#define TOTAL_STEP_NUM 7 // Need to change when total step number is changed
+#define TOTAL_STEP_NUM 8 // Need to change when total step number is changed
 #define LANE_KEEPING_THRESHOLD 0.1
 
 class LaneKeepingAutorunner : public AutorunnerBase{
@@ -18,6 +19,7 @@ private:
 private:
     virtual void register_subscribers();
 private:
+    void points_raw_cb(const sensor_msgs::PointCloud2& msg);	
     void ndt_stat_cb(const autoware_msgs::NDTStat& msg);
     void lane_waypoints_array_cb(const autoware_msgs::LaneArray& msg);
     void local_trajectories_cb(const autoware_msgs::LaneArray& msg);

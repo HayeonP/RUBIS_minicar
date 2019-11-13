@@ -1,5 +1,5 @@
 <launch>
-	<!-- Waypoint : 0 / Dialog : 1 -->
+	<!-- Dialog : 1 / Waypoint : 0 -->
 	<arg name="param_flag" default="0"/>	
 
 	<!-- Velocity -->
@@ -8,7 +8,7 @@
 	<arg name="const_lookahead_distance" default="4"/>
 
 	<!-- lookahead_ratio -->
-	<arg name="lookahead_distance_ratio" default="0.2"/>
+	<arg name="lookahead_distance_ratio" default="0.9"/>
 
 	<!-- minimum_lookahead_distance-->
 	<arg name="minimum_lookahead_distance" default="0.2"/>

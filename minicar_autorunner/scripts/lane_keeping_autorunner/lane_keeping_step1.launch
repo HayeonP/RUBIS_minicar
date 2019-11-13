@@ -2,10 +2,10 @@
 	<arg name="scripts_dir" default="$(find minicar_autorunner)/scripts/lane_keeping_autorunner/step1"/>
 
 	<include file="$(arg scripts_dir)/lidar_base_tf.launch"/>
+	<include file="$(arg scripts_dir)/lidar_vlp16.launch" />
+	<include file="$(arg scripts_dir)/voxel_grid_filter.launch"/>		
 	<include file="$(arg scripts_dir)/map_tf.launch"/>
 	<!--<node pkg="" type="" name="" args=""/>-->
 	<include file="$(arg scripts_dir)/map_loader.launch" />
-	<!--<include file="$(arg scripts_dir)/lidar_vlp16.launch" />-->
-	<include file="$(arg scripts_dir)/voxel_grid_filter.launch" />
-	<include file="$(arg scripts_dir)/ndt_matching.launch" />			
+
 </launch>

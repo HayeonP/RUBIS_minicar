@@ -1,4 +1,4 @@
-total_step_num: 7
+total_step_num: 8
 terminate_script_path: "~/minicar_ws/src/minicar_autorunner/scripts/lane_keeping_autorunner/terminate.sh"
 # step_# : 
 #     [0] pacakge name
@@ -7,10 +7,11 @@ terminate_script_path: "~/minicar_ws/src/minicar_autorunner/scripts/lane_keeping
 #     [3] state that check constraint topic or not ( "true" or "false" )
 #     [4] target type( RUN or LAUNCH )
 
-step_1: ["minicar_autorunner", "wf_sim_step1.launch", "true", "false", "LAUNCH"]
-step_2: ["minicar_autorunner", "wf_sim_step2.launch", "true", "true", "LAUNCH"]
-step_3: ["minicar_autorunner", "wf_sim_step3.launch", "true", "true", "LAUNCH"]
-step_4: ["minicar_autorunner", "wf_sim_step4.launch", "false", "true", "LAUNCH"]
-step_5: ["minicar_autorunner", "wf_sim_step5.launch", "true", "false", "LAUNCH"]
-step_6: ["minicar_autorunner", "wf_sim_step6.launch", "true", "true", "LAUNCH"]
-step_7: ["minicar_autorunner", "wf_sim_step7.launch", "false", "true", "LAUNCH"]
+step_1: ["minicar_autorunner", "lane_keeping_step1.launch", "true", "false", "LAUNCH"]
+step_2: ["minicar_autorunner", "lane_keeping_step2.launch", "true", "true", "LAUNCH"]
+step_3: ["minicar_autorunner", "lane_keeping_step3.launch", "true", "true", "LAUNCH"]
+step_4: ["minicar_autorunner", "lane_keeping_step4.launch", "true", "true", "LAUNCH"]
+step_5: ["minicar_autorunner", "lane_keeping_step5.launch", "false", "true", "LAUNCH"]
+step_6: ["minicar_autorunner", "lane_keeping_step6.launch", "true", "false", "LAUNCH"]
+step_7: ["minicar_autorunner", "lane_keeping_step7.launch", "true", "true", "LAUNCH"]
+step_8: ["minicar_autorunner", "lane_keeping_step8.launch", "false", "true", "LAUNCH"]

@@ -1,9 +1,9 @@
 <launch>
 	<!-- Horizon -->
-	<arg name="horizonDistance" 			default="7"  />
+	<arg name="horizonDistance" 			default="7.5"  />
 
 	<!-- Plan Distance -->
-	<arg name="maxLocalPlanDistance" 		default="10" />	
+	<arg name="maxLocalPlanDistance" 		default="12.2" />	
 
 	<!-- Path Density -->
 	<arg name="pathDensity" 			default="0.02" />
@@ -15,13 +15,13 @@
 	<arg name="rollOutsNumber" 			default="4"    />
 
 	<!-- MAx Velocity -->
-	<arg name="maxVelocity" 				default="0.3" />
+	<arg name="maxVelocity" 				default="1.4" />
 
 	<!-- Acceleration -->
-	<arg name="maxAcceleration" 			default="0.3" />
+	<arg name="maxAcceleration" 			default="1.4" />
 
 	<!-- Deceleration -->
-	<arg name="maxDeceleration" 			default="-0.3" />
+	<arg name="maxDeceleration" 			default="-1.4" />
 
 	<!-- Enable Following -->
 	<arg name="enableFollowing" 			default="false" />	
@@ -63,8 +63,8 @@
 	<arg name="speedProfileFactor"		default="1.2"  />
 	<arg name="smoothingDataWeight"			default="0.45"  />
 	<arg name="smoothingSmoothWeight"		default="0.4"  />	
-	<arg name="width" 					default="0.25"  /> <!-- Vehicle Size -->
-	<arg name="length" 					default="0.5"  /> <!-- Vehicle Size -->
+	<arg name="width" 					default="0.10"  /> <!-- Vehicle Size -->
+	<arg name="length" 					default="0.10"  /> <!-- Vehicle Size -->
 	<arg name="wheelBaseLength" 			default="0.1"  /> <!-- Vehicle Size -->
 	<arg name="turningRadius"				default="5.2"  />
 	<arg name="maxSteerAngle" 			default="0.45" />

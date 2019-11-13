@@ -9,6 +9,7 @@ void ControlModule::autoware_cb(const geometry_msgs::TwistStamped& in_twist){
 }
 
 void ControlModule::lane_following_speed_cb(const std_msgs::Float64& speed){
+	ROS_WARN("Send lane following speed!");
 	lane_following_speed_ = speed.data;
 	ControlModule::pub_vesc_value();
 }
@@ -23,6 +24,7 @@ void ControlModule::current_pose_cb(const geometry_msgs::PoseStamped& current_po
 }
 
 void ControlModule::goal_cb(const geometry_msgs::PoseStamped& msg){
+	check_arrived_ = true;
 	goal_pose_ = msg.pose;
 }
 
@@ -44,10 +46,6 @@ void ControlModule::behavior_state_cb(const visualization_msgs::MarkerArray& msg
 		current_state_ = std::string("Init");	
 
 	return;
-}
-
-void ControlModule::is_found_cb(const lane_following::isFound& msg){
-	is_found_ = msg;
 }
 
 void ControlModule::cal_vesc_value(double linear_vel, double angular_vel)
@@ -72,19 +70,21 @@ void ControlModule::pub_vesc_value(){
 	double linear_vel = 0;
 	double angular_vel = 0;
 
-	if(is_arrived_to_goal_){
+	if(is_arrived_to_goal_ == true){
 		// Arrived to the goal
-
+		ROS_WARN("Arrived to goal!");
 		linear_vel = 0;
 		angular_vel = 0;
 	}
 	else if(from_autoware_ == true && from_lane_following_ == false && is_end_ == false){
+		ROS_WARN("Autoware forward");
 		// Only Autoware
 		current_state_ = std::string("End");
 		linear_vel = autoware_speed_;
 		angular_vel = autoware_steer_;
 	}
 	else if(from_autoware_ == true && from_lane_following_ == false && is_end_ == true){
+		ROS_WARN("Autoware End");
 		// Only Autoware
 		current_state_ = std::string("Fail");
 		linear_vel = 0;
@@ -92,6 +92,8 @@ void ControlModule::pub_vesc_value(){
 	}
 	else if(from_autoware_ == false && from_lane_following_ == true){ // Don't care is_end_
 		// Only lane following
+		ROS_WARN("D");
+		ROS_WARN("Lane speed %lf, steer %lf", lane_following_speed_, lane_following_steer_);
 		current_state_ = std::string("Lane Following");
 		linear_vel = lane_following_speed_;
 		angular_vel = lane_following_steer_;
@@ -169,7 +171,6 @@ void ControlModule::init(){
 	current_pose_sub_ = nh_.subscribe("/ndt_pose", 1, &ControlModule::current_pose_cb, this);
 	goal_sub_ = nh_.subscribe("move_base_simple_goal", 1, &ControlModule::goal_cb, this);	
 	behavior_state_sub_ = nh_.subscribe("/behavior_state", 1, &ControlModule::behavior_state_cb, this);
-	is_found_sub_ = nh_.subscribe("/is_found", 1, &ControlModule::is_found_cb, this);
 
 	vel_pub_ = nh_.advertise<std_msgs::Float64>("/commands/motor/speed", 1);
 	pos_pub_ = nh_.advertise<std_msgs::Float64>("/commands/servo/position", 1);
@@ -182,7 +183,6 @@ void ControlModule::init(){
 	current_state_ = std::string("Empty");
 	goal_pose_ = geometry_msgs::Pose();	
 	current_pose_ = geometry_msgs::Pose();
-	is_found_ = lane_following::isFound();
 	
 	// Exit if source is not selected
 	if(from_lane_following_ == false && from_autoware_ == false){
@@ -196,10 +196,18 @@ void ControlModule::Run()
 	init();
 	
 	ROS_WARN("Control module START ! ");
+	
+	cal_vesc_value(0,0);	
+	std_msgs::Float64 speed_msg;
+	std_msgs::Float64 steer_msg;
+	speed_msg.data = autoware_speed_;
+	steer_msg.data = autoware_steer_;
+	vel_pub_.publish(speed_msg);
+	pos_pub_.publish(steer_msg);
 
 	while(ros::ok()){
 		ros::spinOnce();
-		is_arrived_to_goal_ = is_arrived_to_goal();
+		if(check_arrived_) is_arrived_to_goal_ = is_arrived_to_goal();
 		is_end_ = ( current_state_ == std::string("End") ) ? true : false;
 	}
 }
