@@ -160,16 +160,14 @@ target_link_libraries(twist_converter
 
 
 add_executable(control_module
-				include/control_module/control_module.h
+	include/control_module/control_module.h
         src/control_module/control_module_node.cpp
-				src/control_module/control_module.cpp)
+	src/control_module/control_module.cpp)
 target_link_libraries(control_module
    ${catkin_LIBRARIES}
 )
 # add_dependencies(control_module ${catkin_EXPORTED_TARGETS} ${${my_package}_EXPORTED_TARGETS})
 add_dependencies(control_module ${${my_package}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_gencfg)
-
-
 
 #############
 ## Install ##

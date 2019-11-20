@@ -23,6 +23,7 @@ private:
 	ros::Publisher vel_pub_;
 	ros::Publisher pos_pub_;
 	ros::Publisher state_pub_;
+
 	double speed_to_erpm_gain_;
 	double speed_to_erpm_offset_;
 	double steering_angle_to_servo_gain_;

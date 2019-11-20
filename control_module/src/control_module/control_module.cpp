@@ -77,9 +77,9 @@ void ControlModule::pub_vesc_value(){
 		angular_vel = 0;
 	}
 	else if(from_autoware_ == true && from_lane_following_ == false && is_end_ == false){
-		ROS_WARN("Autoware forward");
+		// ROS_WARN("Autoware forward");
 		// Only Autoware
-		current_state_ = std::string("End");
+		ROS_WARN("speed : %lf / steer : %lf", autoware_speed_, autoware_steer_);
 		linear_vel = autoware_speed_;
 		angular_vel = autoware_steer_;
 	}
@@ -160,7 +160,12 @@ void ControlModule::init(){
 		ROS_WARN("lane str : %s / %s", lane_following_speed_str_.c_str(), lane_following_steer_str_.c_str());
 		ROS_WARN("twsit str : %s / end threshold : %lf", twist_str_.c_str(), end_threshold_);
 	}
-	
+
+
+	vel_pub_ = nh_.advertise<std_msgs::Float64>("/commands/motor/speed", 1);
+	pos_pub_ = nh_.advertise<std_msgs::Float64>("/commands/servo/position", 1);
+	state_pub_ = nh_.advertise<std_msgs::String>("/control_module_state", 1);
+
 	if(from_lane_following_){
 		lane_following_speed_sub_ = nh_.subscribe(lane_following_speed_str_, 1, &ControlModule::lane_following_speed_cb, this);
 		lane_following_steer_sub_ = nh_.subscribe(lane_following_steer_str_, 1, &ControlModule::lane_following_steer_cb, this);
@@ -172,12 +177,9 @@ void ControlModule::init(){
 	goal_sub_ = nh_.subscribe("move_base_simple_goal", 1, &ControlModule::goal_cb, this);	
 	behavior_state_sub_ = nh_.subscribe("/behavior_state", 1, &ControlModule::behavior_state_cb, this);
 
-	vel_pub_ = nh_.advertise<std_msgs::Float64>("/commands/motor/speed", 1);
-	pos_pub_ = nh_.advertise<std_msgs::Float64>("/commands/servo/position", 1);
-	state_pub_ = nh_.advertise<std_msgs::String>("/control_module_state", 1);
 	
 	autoware_speed_ = 0;
-	autoware_steer_ = 0;
+	autoware_steer_ = 0.5;
 	lane_following_speed_ = 0;
 	lane_following_steer_ = 0;	
 	current_state_ = std::string("Empty");
@@ -194,21 +196,21 @@ void ControlModule::init(){
 void ControlModule::Run()
 {
 	init();
-	
-	ROS_WARN("Control module START ! ");
-	
+	ros::Rate rate(20);
 	cal_vesc_value(0,0);	
 	std_msgs::Float64 speed_msg;
 	std_msgs::Float64 steer_msg;
 	speed_msg.data = autoware_speed_;
 	steer_msg.data = autoware_steer_;
-	vel_pub_.publish(speed_msg);
-	pos_pub_.publish(steer_msg);
-
+		
+	ROS_WARN("Control module START ! ");
+	
 	while(ros::ok()){
 		ros::spinOnce();
 		if(check_arrived_) is_arrived_to_goal_ = is_arrived_to_goal();
 		is_end_ = ( current_state_ == std::string("End") ) ? true : false;
+		pub_vesc_value();
+		rate.sleep();
 	}
 }
 

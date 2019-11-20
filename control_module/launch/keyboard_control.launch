@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <launch>
-
   <rosparam>
     speed_to_erpm_gain: 4614
     speed_to_erpm_offset: 0.0
@@ -22,6 +21,7 @@
   </rosparam>
 
   <node pkg="vesc_driver" type="vesc_driver_node" name="vesc_driver" />
+  <node pkg="control_module" type="twist_converter" name="twister_converter" />
   <node pkg="control_module" type="control_module" name="control_module" output="screen">
   </node>
 </launch>
