@@ -15,13 +15,13 @@
 	<arg name="rollOutsNumber" 			default="4"    />
 
 	<!-- MAx Velocity -->
-	<arg name="maxVelocity" 				default="1.4" />
+	<arg name="maxVelocity" 			default="1.5" />
 
 	<!-- Acceleration -->
-	<arg name="maxAcceleration" 			default="1.4" />
+	<arg name="maxAcceleration" 			default="1.5" />
 
 	<!-- Deceleration -->
-	<arg name="maxDeceleration" 			default="-1.4" />
+	<arg name="maxDeceleration" 			default="-1.5" />
 
 	<!-- Enable Following -->
 	<arg name="enableFollowing" 			default="false" />	
@@ -63,15 +63,15 @@
 	<arg name="speedProfileFactor"		default="1.2"  />
 	<arg name="smoothingDataWeight"			default="0.45"  />
 	<arg name="smoothingSmoothWeight"		default="0.4"  />	
-	<arg name="width" 					default="0.10"  /> <!-- Vehicle Size -->
-	<arg name="length" 					default="0.10"  /> <!-- Vehicle Size -->
-	<arg name="wheelBaseLength" 			default="0.1"  /> <!-- Vehicle Size -->
+	<arg name="width" 					default="1.85"  /> <!-- Vehicle Size -->
+	<arg name="length" 					default="4.2"  /> <!-- Vehicle Size -->
+	<arg name="wheelBaseLength" 			default="2.7"  /> <!-- Vehicle Size -->
 	<arg name="turningRadius"				default="5.2"  />
 	<arg name="maxSteerAngle" 			default="0.45" />
-	<arg name="steeringDelay" 			default="1.2" />
-	<arg name="minPursuiteDistance" 	default="3.0"  />
-	<arg name="additionalBrakingDistance" default="5.0"  />
-	<arg name="giveUpDistance" 			default="-4.0"  />
+	<arg name="steeringDelay" 			default="1.2" /> <!-- default : 1.2 -->
+	<arg name="minPursuiteDistance" 	default="3"  /> <!-- deafult = 3 -->
+	<arg name="additionalBrakingDistance" default="0.05"  />
+	<arg name="giveUpDistance" 			default="-4"  /> <!-- default: -4 -->
 
 
 	<node pkg="op_local_planner" type="op_common_params" name="op_common_params" output="screen">

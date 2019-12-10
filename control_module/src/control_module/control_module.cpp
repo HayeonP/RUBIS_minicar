@@ -70,19 +70,19 @@ void ControlModule::pub_vesc_value(){
 	double linear_vel = 0;
 	double angular_vel = 0;
 
-	if(is_arrived_to_goal_ == true){
+	/*if(is_arrived_to_goal_ == true){
 		// Arrived to the goal
 		ROS_WARN("Arrived to goal!");
 		linear_vel = 0;
 		angular_vel = 0;
-	}
-	else if(from_autoware_ == true && from_lane_following_ == false && is_end_ == false){
+	}*/
+	//else if(from_autoware_ == true && from_lane_following_ == false && is_end_ == false){
 		// ROS_WARN("Autoware forward");
 		// Only Autoware
-		ROS_WARN("speed : %lf / steer : %lf", autoware_speed_, autoware_steer_);
+		//ROS_WARN("speed : %lf / steer : %lf", autoware_speed_, autoware_steer_);
 		linear_vel = autoware_speed_;
 		angular_vel = autoware_steer_;
-	}
+	/*}
 	else if(from_autoware_ == true && from_lane_following_ == false && is_end_ == true){
 		ROS_WARN("Autoware End");
 		// Only Autoware
@@ -113,7 +113,7 @@ void ControlModule::pub_vesc_value(){
 		current_state_ = std::string("Empty");
 		linear_vel = 0;
 		angular_vel = 0;
-	}
+	}*/
 
 	speed_msg.data = linear_vel;
 	steer_msg.data = angular_vel;
@@ -178,8 +178,8 @@ void ControlModule::init(){
 	behavior_state_sub_ = nh_.subscribe("/behavior_state", 1, &ControlModule::behavior_state_cb, this);
 
 	
-	autoware_speed_ = 0;
-	autoware_steer_ = 0.5;
+	//autoware_speed_ = 0;
+	//autoware_steer_ = 0.5;
 	lane_following_speed_ = 0;
 	lane_following_steer_ = 0;	
 	current_state_ = std::string("Empty");
