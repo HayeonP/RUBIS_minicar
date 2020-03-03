@@ -15,13 +15,13 @@
 	<arg name="rollOutsNumber" 			default="4"    />
 
 	<!-- MAx Velocity -->
-	<arg name="maxVelocity" 			default="1.5" />
+	<arg name="maxVelocity" 			default="1.2" />
 
 	<!-- Acceleration -->
-	<arg name="maxAcceleration" 			default="1.5" />
+	<arg name="maxAcceleration" 			default="1.2" />
 
 	<!-- Deceleration -->
-	<arg name="maxDeceleration" 			default="-1.5" />
+	<arg name="maxDeceleration" 			default="-1.2" />
 
 	<!-- Enable Following -->
 	<arg name="enableFollowing" 			default="false" />	

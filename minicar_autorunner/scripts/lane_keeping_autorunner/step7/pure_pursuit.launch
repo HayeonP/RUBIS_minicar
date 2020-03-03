@@ -11,7 +11,7 @@
 	<arg name="lookahead_distance_ratio" default="2"/>  <!-- before 2.5-->
 
 	<!-- minimum_lookahead_distance-->
-	<arg name="minimum_lookahead_distance" default="0.5"/>   <!-- default 0.2 -->
+	<arg name="minimum_lookahead_distance" default="0.5"/>   <!-- default 0.2-->
 
 	<!-- Linear Interpolation -->
 	<arg name="is_linear_interpolation" default="True"/>
