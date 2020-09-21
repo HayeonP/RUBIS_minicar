@@ -84,24 +84,22 @@ make install
 cd ..
 
 
-cd ~/autoware.ai/build
-
 echo ""
-echo "build lidar_localizer pakg"
+echo "build op_global_planner pakg"
 
 cd op_global_planner
 make install
 cd ..
 
 echo ""
-echo "build lidar_localizer pakg"
+echo "build points_downsampler pakg"
 
 cd points_downsampler
 make install
 cd ..
 
 echo ""
-echo "build lidar_localizer pakg"
+echo "build waypoint_follower pakg"
 
 cd waypoint_follower
 make install
